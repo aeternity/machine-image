@@ -1,0 +1,59 @@
+version: 2
+references:
+  infrastructure_config: &infrastructure_config
+    docker:
+      - image: aeternity/infrastructure
+
+  fail_notification: &fail_notification
+    run:
+      name: Send failure notification
+      environment:
+        NOTIFY_BRANCH: master
+        HOOK_TEMPLATE: |
+          {
+            "text": "CircleCI (machine-image) job **%s** failed on branch **%s** by @%s",
+            "attachments": [
+              {
+                "title": "Build Link",
+                "title_link": "%s",
+                "color": "#FAD6D6"
+              }
+            ]
+          }
+      command: |
+        HOOK_DATA=$(printf "$HOOK_TEMPLATE" "${CIRCLE_JOB:?}" "${CIRCLE_BRANCH:?}" "${CIRCLE_USERNAME:-unknown}" "${CIRCLE_BUILD_URL:?}")
+        curl -X POST -H 'Content-Type: application/json' ${ROCKET_HOOK_URL:?} --data "${HOOK_DATA:?}"
+      when: on_fail
+
+jobs:
+  test:
+    <<: *infrastructure_config
+    steps:
+      - checkout
+      - run:
+          name: Validate packer configuration
+          command: packer validate packer/epoch.json
+
+  build:
+    <<: *infrastructure_config
+    steps:
+      - checkout
+      - run:
+          name: Build and publish images
+          command: packer build packer/epoch.json
+      - run:
+          name: Cleanup old AMIs
+          command: python scripts/ami-cleanup.py
+      - *fail_notification
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - test:
+          requires: []
+
+      - build:
+          filters:
+            branches:
+              only: master
