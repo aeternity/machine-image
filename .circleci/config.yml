@@ -40,7 +40,9 @@ jobs:
       - checkout
       - run:
           name: Build and publish images
-          command: packer build packer/epoch.json
+          command: |
+            packer/scripts/dump-gcp-credentials.sh
+            packer build packer/epoch.json
       - run:
           name: Cleanup old AMIs
           command: python scripts/ami-cleanup.py
@@ -54,6 +56,8 @@ workflows:
           requires: []
 
       - build:
+          requires:
+            - test
           filters:
             branches:
               only: master
