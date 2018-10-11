@@ -40,6 +40,7 @@ jobs:
       - checkout
       - run:
           name: Build and publish images
+          no_output_timeout: 2h
           command: |
             packer/scripts/dump-gcp-credentials.sh
             packer build packer/epoch.json
