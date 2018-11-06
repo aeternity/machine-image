@@ -1,6 +1,8 @@
 ---
 - import_playbook: /infrastructure/ansible/setup.yml
 - import_playbook: /infrastructure/ansible/monitoring.yml
+  vars:
+    datadog_api_key: DATADOG_API_KEY
 
 - hosts: all
   remote_user: master
