@@ -25,11 +25,17 @@ references:
         curl -X POST -H 'Content-Type: application/json' ${ROCKET_HOOK_URL:?} --data "${HOOK_DATA:?}"
       when: on_fail
 
+  setup_ci_environment: &setup_ci_environment
+    run:
+      name: Setup Environment
+      command: echo "source /infrastructure/import-secrets.sh" >> $BASH_ENV
+
 jobs:
   test:
     <<: *infrastructure_config
     steps:
       - checkout
+      - *setup_ci_environment
       - run:
           name: Validate packer configuration
           command: packer validate packer/epoch.json
@@ -38,12 +44,11 @@ jobs:
     <<: *infrastructure_config
     steps:
       - checkout
+      - *setup_ci_environment
       - run:
           name: Build and publish images
           no_output_timeout: 2h
-          command: |
-            packer/scripts/dump-gcp-credentials.sh
-            packer build packer/epoch.json
+          command: packer build packer/epoch.json
       - run:
           name: Cleanup old AMIs
           command: python packer/scripts/ami-cleanup.py
