@@ -66,4 +66,4 @@ workflows:
             - test
           filters:
             branches:
-              only: packer-on-spots
+              only: master
