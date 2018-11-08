@@ -32,7 +32,7 @@
       "ami_regions": ["eu-central-1", "ap-southeast-1", "eu-west-2"],
       "force_deregister": true,
       "force_delete_snapshot": true,
-      "spot_price": "0.2",
+      "spot_price": "0.2"
     }
   ],
   "provisioners":
