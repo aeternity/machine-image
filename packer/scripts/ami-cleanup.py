@@ -31,6 +31,8 @@ def get_stale_amis(ec2_client, epoch_image_name):
         ]
     )
     used_amis = get_used_amis(ec2_client)
+    print(("Found used AMI: \n %s \n" % ( used_amis )))
+
 
     for image in images["Images"]:
         if image["ImageId"] not in used_amis:
@@ -41,6 +43,8 @@ def get_stale_amis(ec2_client, epoch_image_name):
             amis.append({"ImageId": image["ImageId"],"CreationDate": image["CreationDate"],"Snapshots": snaps})
 
     amis.sort(key=lambda image: image["CreationDate"], reverse = True)
+
+    print(("Not used AMI with snapshots:  \n %s \n") % (amis))
 
     return amis[3:]
 
@@ -54,6 +58,7 @@ def get_used_amis(ec2_client):
     return list(set(used_amis))
 
 def deregister(ec2_client, ids):
+    print(("List to deregister: \n %s \n") % (ids))
     for i in ids:
 
         ec2_client.deregister_image(
@@ -67,6 +72,7 @@ def deregister(ec2_client, ids):
 
 try:
     for region in REGIONS:
+        print(("Working in region: %s" % ( region )))
         ec2_client = boto3.client('ec2',region_name=region)
         deregister(ec2_client, get_stale_amis(ec2_client, EPOCH_IMAGE_NAME))
 
