@@ -26,12 +26,13 @@
         "most_recent": true
       },
       "iam_instance_profile": "epoch-packer-build",
-      "instance_type": "t2.micro",
+      "instance_type": "t2.small",
       "ssh_username": "ubuntu",
       "ami_name": "epoch-ubuntu-16.04-v{{timestamp}}",
       "ami_regions": ["eu-central-1", "ap-southeast-1", "eu-west-2"],
       "force_deregister": true,
-      "force_delete_snapshot": true
+      "force_delete_snapshot": true,
+      "spot_price": "0.2"
     }
   ],
   "provisioners":
