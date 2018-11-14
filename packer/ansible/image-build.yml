@@ -11,7 +11,7 @@
     datadog_enabled: false
   tasks:
     - name: "Setup bootstrap on reboot"
-      lineinflie:
+      lineinfile:
         path: /etc/cloud/cloud.cfg
         regexp: '^ - scripts-user'
         line: ' - [scripts-user, always]'
