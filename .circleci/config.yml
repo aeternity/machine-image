@@ -2,7 +2,7 @@ version: 2
 references:
   infrastructure_config: &infrastructure_config
     docker:
-      - image: aeternity/infrastructure
+      - image: aeternity/infrastructure:bootstrap-on-reboot
 
   fail_notification: &fail_notification
     run:
@@ -66,4 +66,4 @@ workflows:
             - test
           filters:
             branches:
-              only: master
+              only: bootstrap-on-reboot
