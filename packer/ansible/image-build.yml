@@ -1,5 +1,8 @@
 ---
 - import_playbook: /infrastructure/ansible/setup.yml
+  vars:
+    vault_addr: "{{ lookup('env','VAULT_ADDR') }}"
+
 - import_playbook: /infrastructure/ansible/monitoring.yml
   vars:
     datadog_api_key: DUMMY_DATADOG_API_KEY_NOT_CONFIGURED
