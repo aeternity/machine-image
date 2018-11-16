@@ -10,6 +10,12 @@
   vars:
     datadog_enabled: false
   tasks:
+    - name: "Setup bootstrap on reboot"
+      lineinfile:
+        path: /etc/cloud/cloud.cfg
+        regexp: '^ - scripts-user'
+        line: ' - [scripts-user, always]'
+
     - name: "Stop and disable datadog services"
       service:
         name: "{{ item }}"
