@@ -50,8 +50,7 @@
     {
       "type": "shell",
       "scripts": [
-        "{{ template_dir }}/scripts/add-master-user.sh",
-        "{{ template_dir }}/scripts/install-python2.sh"
+        "{{ template_dir }}/scripts/add-master-user.sh"
       ],
       "only": ["amazon-ebs", "googlecompute"]
     },
@@ -59,6 +58,9 @@
       "type": "ansible",
       "user": "ubuntu",
       "playbook_file": "{{ template_dir }}/ansible/image-build.yml",
+      "extra_arguments": [
+        "-e ansible_python_interpreter='/usr/bin/env python3'"
+      ],
       "only": ["amazon-ebs"]
     },
     {
