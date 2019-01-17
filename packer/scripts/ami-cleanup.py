@@ -24,7 +24,7 @@ def get_stale_amis(ec2_client, aeternity_image_names):
     image_names = []
 
     # Add wildcard to the list (or string) of image names.
-    if isinstance(aeternity_image_name, list):
+    if isinstance(aeternity_image_names, list):
         image_names = [ "{0}*".format(image) for image in aeternity_image_names ]
     elif isinstance(aeternity_image_names, basestring):
         image_names = [ aeternity_image_names + "*" ]
@@ -80,18 +80,14 @@ def deregister(ec2_client, ids):
     print(("List to deregister: \n %s \n") % (ids))
     for i in ids:
 
-        print("(dry-run) Deregister image id %s" %i['ImageID'])
-        # Commented for DEBUG
-        # ec2_client.deregister_image(
-        #     ImageId = i["ImageId"]
-        # )
+        ec2_client.deregister_image(
+            ImageId = i["ImageId"]
+        )
 
         for snap in i["Snapshots"]:
-            print("(dry-run) Snapshot to delete %s" %snap)
-            # Commented for DEBUG
-            #     ec2_client.delete_snapshot(
-            #         SnapshotId = snap
-            # )
+            ec2_client.delete_snapshot(
+                SnapshotId = snap
+            )
 
 try:
     for region in REGIONS:
