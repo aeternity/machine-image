@@ -38,7 +38,7 @@ jobs:
       - *setup_ci_environment
       - run:
           name: Validate packer configuration
-          command: packer validate packer/epoch.json
+          command: packer validate packer/aeternity.json
 
   build:
     <<: *infrastructure_config
@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Build and publish images
           no_output_timeout: 2h
-          command: packer build packer/epoch.json
+          command: packer build packer/aeternity.json
       - run:
           name: Cleanup old AMIs
           command: python packer/scripts/ami-cleanup.py

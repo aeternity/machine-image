@@ -9,21 +9,33 @@ REGIONS = [
     "eu-west-2"
 ]
 
-EPOCH_IMAGE_NAME = "epoch-ubuntu-16.04"
+AETERNITY_IMAGE_NAMES = [
+    "aeternity-ubuntu-16.04",
+    "epoch-ubuntu-16.04"
+]
 
 def get_account_id():
     sts = boto3.client("sts")
     return sts.get_caller_identity()["Account"]
 
-def get_stale_amis(ec2_client, epoch_image_name):
+def get_stale_amis(ec2_client, aeternity_image_names):
     amis = []
+
+    image_names = []
+
+    # Add wildcard to the list (or string) of image names.
+    if isinstance(aeternity_image_name, list):
+        image_names = [ "{0}*".format(image) for image in aeternity_image_names ]
+    elif isinstance(aeternity_image_names, basestring):
+        image_names = [ aeternity_image_names + "*" ]
+    else:
+        return []
+
     images = ec2_client.describe_images(
         Filters = [
             {
                 "Name": "name",
-                "Values": [
-                epoch_image_name + "*"
-                ]
+                "Values": image_names
             }
         ],
         Owners = [
@@ -58,23 +70,34 @@ def get_used_amis(ec2_client):
     return list(set(used_amis))
 
 def deregister(ec2_client, ids):
+    # Protect against empty list (from get_stale_amis) and potentially
+    # deleting something that we do not want. Unclear how AWS/Boto
+    # will handle empty list.
+    if not ids:
+        print("No ids to deregister")
+        return
+
     print(("List to deregister: \n %s \n") % (ids))
     for i in ids:
 
-        ec2_client.deregister_image(
-            ImageId = i["ImageId"]
-        )
+        print("(dry-run) Deregister image id %s" %i['ImageID'])
+        # Commented for DEBUG
+        # ec2_client.deregister_image(
+        #     ImageId = i["ImageId"]
+        # )
 
         for snap in i["Snapshots"]:
-            ec2_client.delete_snapshot(
-                SnapshotId = snap
-        )
+            print("(dry-run) Snapshot to delete %s" %snap)
+            # Commented for DEBUG
+            #     ec2_client.delete_snapshot(
+            #         SnapshotId = snap
+            # )
 
 try:
     for region in REGIONS:
         print(("Working in region: %s" % ( region )))
         ec2_client = boto3.client('ec2',region_name=region)
-        deregister(ec2_client, get_stale_amis(ec2_client, EPOCH_IMAGE_NAME))
+        deregister(ec2_client, get_stale_amis(ec2_client, AETERNITY_IMAGE_NAMES))
 
 except:
     print("Unexpected error:", sys.exc_info()[0])
