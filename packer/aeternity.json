@@ -11,7 +11,7 @@
       "source_image": "ubuntu-1604-xenial-v20180814",
       "ssh_username": "ubuntu",
       "zone": "us-central1-a",
-      "image_name": "epoch-ubuntu-16-04-v{{timestamp}}"
+      "image_name": "aeternity-ubuntu-16-04-v{{timestamp}}"
     },
     {
       "type": "amazon-ebs",
@@ -28,7 +28,7 @@
       "iam_instance_profile": "epoch-packer-build",
       "instance_type": "t2.small",
       "ssh_username": "ubuntu",
-      "ami_name": "epoch-ubuntu-16.04-v{{timestamp}}",
+      "ami_name": "aeternity-ubuntu-16.04-v{{timestamp}}",
       "ami_regions": ["eu-central-1", "ap-southeast-1", "eu-west-2"],
       "force_deregister": true,
       "force_delete_snapshot": true,
