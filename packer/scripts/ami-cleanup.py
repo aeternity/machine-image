@@ -6,7 +6,8 @@ REGIONS = [
     "us-west-2",
     "eu-central-1",
     "ap-southeast-1",
-    "eu-west-2"
+    "eu-west-2",
+    "eu-north-1"
 ]
 
 AETERNITY_IMAGE_NAMES = [
