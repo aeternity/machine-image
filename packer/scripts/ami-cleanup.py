@@ -6,6 +6,7 @@ REGIONS = [
     "us-west-2",
     "eu-central-1",
     "ap-southeast-1",
+    "ap-southeast-2",
     "eu-west-2",
     "us-east-2",
     "eu-north-1"
