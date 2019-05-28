@@ -62,9 +62,11 @@ workflows:
   build_test_deploy:
     jobs:
       - test:
+          context: ae-machine-images
           requires: []
 
       - build:
+          context: ae-machine-images
           requires:
             - test
           filters:
