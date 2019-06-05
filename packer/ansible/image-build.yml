@@ -6,6 +6,7 @@
 - import_playbook: /infrastructure/ansible/monitoring.yml
   vars:
     datadog_api_key: DUMMY_DATADOG_API_KEY_NOT_CONFIGURED
+    network_id: unknown
 
 - hosts: all
   remote_user: master
