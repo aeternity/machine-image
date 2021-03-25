@@ -6,6 +6,7 @@
   "builders":
   [
     {
+      "name": "ubuntu-xenial",
       "type": "amazon-ebs",
       "region": "us-west-2",
       "source_ami_filter": {
@@ -27,8 +28,8 @@
       "spot_price": "0.2"
     },
     {
-      "type": "amazon-ebs",
       "name": "ubuntu-bionic",
+      "type": "amazon-ebs",
       "region": "us-west-2",
       "source_ami_filter": {
         "filters": {
@@ -65,8 +66,7 @@
       "type": "shell",
       "scripts": [
         "{{ template_dir }}/scripts/add-master-user.sh"
-      ],
-      "only": ["amazon-ebs"]
+      ]
     },
     {
       "type": "ansible",
@@ -74,8 +74,7 @@
       "playbook_file": "{{ template_dir }}/ansible/image-build.yml",
       "extra_arguments": [
         "-e ansible_python_interpreter='/usr/bin/env python3'"
-      ],
-      "only": ["amazon-ebs"]
+      ]
     }
   ]
 }
