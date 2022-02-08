@@ -15,16 +15,10 @@
 # views them; you can change their type later on. Read the variables type
 # constraints documentation
 # https://www.packer.io/docs/templates/hcl_templates/variables#type-constraints for more info.
-variable "aws_access_key" {
+variable "aws_token" {
   type    = string
-  default = "${env("AWS_ACCESS_KEY_ID")}"
+  default = env("AWS_SESSION_TOKEN")
 }
-
-variable "aws_secret_key" {
-  type    = string
-  default = "${env("AWS_SECRET_ACCESS_KEY")}"
-}
-
 
 # The amazon-ami data block is generated from your amazon builder source_ami_filter; a data
 # from this block can be referenced in source and locals blocks.
@@ -62,10 +56,8 @@ locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "amazon-ebs" "ubuntu-bionic" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-
-  ami_name              = "aeternity-ubuntu-18.04-v${local.timestamp}"
+  token                 = var.aws_token
+  ami_name              = "aeternity-ubuntu-18.04-v${local.timestamp}-snapshoot"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
   force_deregister      = true
@@ -78,10 +70,10 @@ source "amazon-ebs" "ubuntu-bionic" {
 }
 
 source "amazon-ebs" "ubuntu-focal" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  token = var.aws_token
 
-  ami_name              = "aeternity-ubuntu-20.04-v${local.timestamp}"
+
+  ami_name              = "aeternity-ubuntu-20.04-v${local.timestamp}-snapshoot"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
   force_deregister      = true
