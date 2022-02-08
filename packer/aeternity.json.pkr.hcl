@@ -25,10 +25,6 @@ variable "aws_secret_key" {
   default = "${env("AWS_SECRET_ACCESS_KEY")}"
 }
 
-variable "postfix" {
-  type    = string
-  default = "${env("POSTFIX")}"
-}
 
 # The amazon-ami data block is generated from your amazon builder source_ami_filter; a data
 # from this block can be referenced in source and locals blocks.
@@ -77,8 +73,6 @@ source "amazon-ebs" "ubuntu-bionic" {
   spot_price            = "0.2"
   ssh_username          = "ubuntu"
 }
-
-# could not parse template for following block: "template: hcl2_upgrade:3: function \"postfix\" not defined"
 
 source "amazon-ebs" "ubuntu-focal" {
   ami_name              = "aeternity-ubuntu-20.04-v${local.timestamp}"
