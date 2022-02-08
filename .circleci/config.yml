@@ -41,7 +41,7 @@ jobs:
       - setup_secrets
       - run:
           name: Validate packer configuration
-          command: envdir /secrets packer validate packer/aeternity.json
+          command: envdir /secrets packer validate packer/aeternity.json.pkr.hcl
 
   build:
     <<: *infrastructure_config
