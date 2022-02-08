@@ -1,0 +1,3 @@
+variable "postfix" {
+  default="snapshoot"
+}
