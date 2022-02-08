@@ -61,13 +61,11 @@ jobs:
     steps:
       - checkout
       - setup_secrets
+      - export POSTFIX="snapshoot"
       - run:
           name: Build and publish images
           no_output_timeout: 2h
           command: envdir /secrets packer build packer/aeternity.json
-      - run:
-          name: Cleanup old AMIs
-          command: envdir /secrets python packer/scripts/ami-cleanup.py
       - *fail_notification
 
 workflows:
