@@ -40,6 +40,10 @@ jobs:
       - checkout
       - setup_secrets
       - run:
+          name: Packer init
+          no_output_timeout: 2h
+          command: envdir /secrets packer init packer/
+      - run:
           name: Validate packer configuration
           command: envdir /secrets packer validate packer/aeternity.json.pkr.hcl
 
