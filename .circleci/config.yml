@@ -40,7 +40,7 @@ jobs:
       - checkout
       - setup_secrets
       - run:
-          name: Packer init
+          name: Packer version
           no_output_timeout: 2h
           command: envdir /secrets packer version
       - run:
@@ -69,6 +69,10 @@ jobs:
     steps:
       - checkout
       - setup_secrets
+      - run:
+          name: Packer version
+          no_output_timeout: 2h
+          command: envdir /secrets packer version
       - run:
           name: Packer init
           no_output_timeout: 2h
