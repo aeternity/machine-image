@@ -73,7 +73,7 @@ source "amazon-ebs" "ubuntu-bionic" {
   iam_instance_profile  = "epoch-packer-build"
   instance_type         = "t2.small"
   region                = "us-west-2"
-  source_ami            = "${data.amazon-ami.bionic.id}"
+  source_ami            = data.amazon-ami.ubuntu-bionic.id
   spot_price            = "0.2"
   ssh_username          = "ubuntu"
 }
@@ -81,14 +81,14 @@ source "amazon-ebs" "ubuntu-bionic" {
 # could not parse template for following block: "template: hcl2_upgrade:3: function \"postfix\" not defined"
 
 source "amazon-ebs" "ubuntu-focal" {
-  ami_name              = "aeternity-ubuntu-20.04-v{{timestamp}}{{postfix}}"
+  ami_name              = "aeternity-ubuntu-20.04-v${local.timestamp}"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
   force_deregister      = true
   iam_instance_profile  = "epoch-packer-build"
   instance_type         = "t2.small"
   region                = "us-west-2"
-  source_ami            = "{{ data `amazon-ami.focal.id` }}"
+  source_ami            = data.amazon-ami.ubuntu-focal.id
   spot_price            = "0.2"
   ssh_username          = "ubuntu"
 }
