@@ -51,7 +51,7 @@ jobs:
       - run:
           name: Build and publish images
           no_output_timeout: 2h
-          command: envdir /secrets packer build packer/aeternity.json
+          command: envdir /secrets packer build packer/aeternity.json.pkr.hcl
       - run:
           name: Cleanup old AMIs
           command: envdir /secrets python packer/scripts/ami-cleanup.py
@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Build and publish images
           no_output_timeout: 2h
-          command: envdir /secrets packer build packer/aeternity.json
+          command: envdir /secrets packer build packer/aeternity.json.pkr.hcl
       - *fail_notification
 
 workflows:
