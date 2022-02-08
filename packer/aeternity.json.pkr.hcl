@@ -64,7 +64,8 @@ locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "amazon-ebs" "ubuntu-bionic" {
-  token                 = var.aws_token
+  token                 = env("AWS_SESSION_TOKEN")
+
   ami_name              = "aeternity-ubuntu-18.04-v${local.timestamp}-snapshoot"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
@@ -78,7 +79,7 @@ source "amazon-ebs" "ubuntu-bionic" {
 }
 
 source "amazon-ebs" "ubuntu-focal" {
-  token = var.aws_token
+  token =env("AWS_SESSION_TOKEN")
 
 
   ami_name              = "aeternity-ubuntu-20.04-v${local.timestamp}-snapshoot"
