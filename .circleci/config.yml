@@ -62,6 +62,10 @@ jobs:
       - checkout
       - setup_secrets
       - run:
+          name: Packer init
+          no_output_timeout: 2h
+          command: envdir /secrets packer init packer/
+      - run:
           name: Build and publish images
           no_output_timeout: 2h
           command: envdir /secrets packer build packer/aeternity.json.pkr.hcl
