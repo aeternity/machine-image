@@ -61,7 +61,9 @@ jobs:
     steps:
       - checkout
       - setup_secrets
-      - export POSTFIX="snapshoot"
+      - run:
+          name: export postifx this is temp
+          command: export POSTFIX="snapshoot"
       - run:
           name: Build and publish images
           no_output_timeout: 2h
