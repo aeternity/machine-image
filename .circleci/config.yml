@@ -3,7 +3,7 @@ version: 2.1
 references:
   infrastructure_config: &infrastructure_config
     docker:
-      - image: aeternityi/infrastructure:bump-packer-1.7.10
+      - image: aeternity/infrastructure:bump-packer-1.7.10
 
   fail_notification: &fail_notification
     run:
