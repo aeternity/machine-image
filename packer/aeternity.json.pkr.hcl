@@ -28,6 +28,14 @@ variable "aws_token" {
   default = env("AWS_SESSION_TOKEN")
 }
 
+variable "aws_secret_key_id" {
+  type    = string
+  default = env("AWS_ACCESS_KEY_ID")
+}
+variable "aws_secret_access_key" {
+  type    = string
+  default = env("AWS_SECRET_ACCESS_KEY")
+}
 # The amazon-ami data block is generated from your amazon builder source_ami_filter; a data
 # from this block can be referenced in source and locals blocks.
 # Read the documentation for data blocks here:
@@ -64,7 +72,10 @@ locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "amazon-ebs" "ubuntu-bionic" {
-  token                 = "${var.aws_token}"
+  #token                 = "${var.aws_token}"
+
+  access_key = var.aws_secret_key_id
+  secret_key = var.aws_secret_access_key
 
   ami_name              = "aeternity-ubuntu-18.04-v${local.timestamp}-snapshoot"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
