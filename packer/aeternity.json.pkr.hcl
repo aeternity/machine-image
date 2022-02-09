@@ -82,6 +82,7 @@ source "amazon-ebs" "ubuntu-bionic" {
   force_delete_snapshot = true
   force_deregister      = true
   iam_instance_profile  = "epoch-packer-build"
+  skip_profile_validation = true
   instance_type         = "t2.small"
   region                = "us-west-2"
   source_ami            = data.amazon-ami.ubuntu-bionic.id
@@ -98,6 +99,7 @@ source "amazon-ebs" "ubuntu-focal" {
   force_delete_snapshot = true
   force_deregister      = true
   iam_instance_profile  = "epoch-packer-build"
+  skip_profile_validation = true
   instance_type         = "t2.small"
   region                = "us-west-2"
   source_ami            = data.amazon-ami.ubuntu-focal.id

@@ -3,7 +3,7 @@ version: 2.1
 references:
   infrastructure_config: &infrastructure_config
     docker:
-      - image: aeternity/infrastructure:bump-packer-1.7.10
+      - image: aeternityi/infrastructure:bump-packer-1.7.10
 
   fail_notification: &fail_notification
     run:
@@ -50,7 +50,7 @@ jobs:
           command: envdir /secrets packer init packer/
       - run:
           name: Validate packer configuration
-          command: envdir /secrets packer validate packer/aeternity.json
+          command: envdir /secrets packer validate packer/aeternity.json.pkr.hcl
 
   build:
     <<: *infrastructure_config
@@ -60,7 +60,7 @@ jobs:
       - run:
           name: Build and publish images
           no_output_timeout: 2h
-          command: envdir /secrets packer build packer/aeternity.json
+          command: envdir /secrets packer build packer/aeternity.json.pkr.hcl
       - run:
           name: Cleanup old AMIs
           command: envdir /secrets python packer/scripts/ami-cleanup.py
@@ -81,7 +81,7 @@ jobs:
       - run:
           name: Build and publish images
           no_output_timeout: 2h
-          command: envdir /secrets packer build packer/aeternity.json
+          command: envdir /secrets packer build packer/aeternity.json.pkr.hcl
       - *fail_notification
 
 workflows:
