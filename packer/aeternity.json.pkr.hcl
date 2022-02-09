@@ -77,6 +77,8 @@ source "amazon-ebs" "ubuntu-bionic" {
   access_key = var.aws_secret_key_id
   secret_key = var.aws_secret_access_key
 
+  decode_authorization_messages = true
+
   ami_name              = "aeternity-ubuntu-18.04-v${local.timestamp}-snapshoot"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
@@ -93,6 +95,7 @@ source "amazon-ebs" "ubuntu-bionic" {
 source "amazon-ebs" "ubuntu-focal" {
   token = "${var.aws_token}"
 
+  decode_authorization_messages = true
 
   ami_name              = "aeternity-ubuntu-20.04-v${local.timestamp}-snapshoot"
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
