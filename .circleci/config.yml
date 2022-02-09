@@ -26,6 +26,7 @@ references:
         curl -X POST -H 'Content-Type: application/json' ${ROCKET_HOOK_URL:?} --data "${HOOK_DATA:?}"
       when: on_fail
 
+
 commands:
   setup_secrets:
     steps:
