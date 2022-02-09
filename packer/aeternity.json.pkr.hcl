@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     amazon = {
-      version = "1.0.7"
+      version = "1.0.8"
       source  = "github.com/hashicorp/amazon"
     }
   }
@@ -27,7 +27,6 @@ variable "aws_token" {
   type    = string
   default = env("AWS_SESSION_TOKEN")
 }
-
 variable "aws_secret_key_id" {
   type    = string
   default = env("AWS_ACCESS_KEY_ID")
@@ -83,8 +82,9 @@ source "amazon-ebs" "ubuntu-bionic" {
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
   force_deregister      = true
+
   iam_instance_profile  = "epoch-packer-build"
-  skip_profile_validation = true
+
   instance_type         = "t2.small"
   region                = "us-west-2"
   source_ami            = data.amazon-ami.ubuntu-bionic.id
@@ -101,8 +101,9 @@ source "amazon-ebs" "ubuntu-focal" {
   ami_regions           = ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"]
   force_delete_snapshot = true
   force_deregister      = true
+
   iam_instance_profile  = "epoch-packer-build"
-  skip_profile_validation = true
+
   instance_type         = "t2.small"
   region                = "us-west-2"
   source_ami            = data.amazon-ami.ubuntu-focal.id
