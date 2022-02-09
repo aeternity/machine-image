@@ -69,6 +69,6 @@ workflows:
           context: ae-machine-images
           requires:
             - test
-#          filters:
-#            branches:
-#              only: master
+          filters:
+            branches:
+              only: master
