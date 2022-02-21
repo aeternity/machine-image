@@ -1,6 +1,5 @@
 version: 2.1
 
-
 references:
   infrastructure_config: &infrastructure_config
     docker:
