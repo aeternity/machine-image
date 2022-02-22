@@ -71,10 +71,10 @@ locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "amazon-ebs" "ubuntu-bionic" {
-  #token                 = "${var.aws_token}"
 
   access_key = var.aws_secret_key_id
   secret_key = var.aws_secret_access_key
+  token      = var.aws_token
 
   decode_authorization_messages = true
 
