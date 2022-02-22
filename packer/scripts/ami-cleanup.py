@@ -13,8 +13,8 @@ REGIONS = [
 ]
 
 AETERNITY_IMAGE_NAMES = [
-    "aeternity-ubuntu-16.04",
-    "epoch-ubuntu-16.04"
+    "aeternity-ubuntu-20.04",
+    "epoch-ubuntu-20.04"
 ]
 
 def get_account_id():
