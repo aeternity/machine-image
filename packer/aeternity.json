@@ -6,28 +6,6 @@
   "builders":
   [
     {
-      "name": "ubuntu-xenial",
-      "type": "amazon-ebs",
-      "region": "us-west-2",
-      "source_ami_filter": {
-        "filters": {
-          "virtualization-type": "hvm",
-          "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
-          "root-device-type": "ebs"
-        },
-        "owners": ["099720109477"],
-        "most_recent": true
-      },
-      "iam_instance_profile": "epoch-packer-build",
-      "instance_type": "t2.small",
-      "ssh_username": "ubuntu",
-      "ami_name": "aeternity-ubuntu-16.04-v{{timestamp}}",
-      "ami_regions": ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"],
-      "force_deregister": true,
-      "force_delete_snapshot": true,
-      "spot_price": "0.2"
-    },
-    {
       "name": "ubuntu-bionic",
       "type": "amazon-ebs",
       "region": "us-west-2",
@@ -44,6 +22,28 @@
       "instance_type": "t2.small",
       "ssh_username": "ubuntu",
       "ami_name": "aeternity-ubuntu-18.04-v{{timestamp}}",
+      "ami_regions": ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"],
+      "force_deregister": true,
+      "force_delete_snapshot": true,
+      "spot_price": "0.2"
+    },
+    {
+      "name": "ubuntu-focal",
+      "type": "amazon-ebs",
+      "region": "us-west-2",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "iam_instance_profile": "epoch-packer-build",
+      "instance_type": "t2.small",
+      "ssh_username": "ubuntu",
+      "ami_name": "aeternity-ubuntu-20.04-v{{timestamp}}",
       "ami_regions": ["eu-central-1", "ap-southeast-1", "ap-southeast-2", "eu-west-2", "eu-north-1", "us-east-2"],
       "force_deregister": true,
       "force_delete_snapshot": true,
