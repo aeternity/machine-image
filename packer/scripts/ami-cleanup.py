@@ -4,18 +4,20 @@ from botocore.exceptions import ClientError
 
 REGIONS = [
     "us-west-2",
-    "eu-central-1",
+    "us-east-2",
     "ap-southeast-1",
     "ap-southeast-2",
+    "eu-central-1",
     "eu-west-2",
-    "us-east-2",
     "eu-north-1"
 ]
 
 AETERNITY_IMAGE_NAMES = [
-    "aeternity-ubuntu-20.04",
-    "epoch-ubuntu-20.04"
+    "aeternity-ubuntu-18.04",
+    "aeternity-ubuntu-22.04"
 ]
+
+KEEP_UNUSED_IMAGES = 1
 
 def get_account_id():
     sts = boto3.client("sts")
@@ -61,7 +63,7 @@ def get_stale_amis(ec2_client, aeternity_image_names):
 
     print(("Not used AMI with snapshots:  \n %s \n") % (amis))
 
-    return amis[3:]
+    return amis[KEEP_UNUSED_IMAGES:]
 
 def get_used_amis(ec2_client):
     used_amis = []
