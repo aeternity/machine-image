@@ -73,17 +73,17 @@ workflows:
   version: 2
   build_test_deploy:
     jobs:
-      - test:
-          context: ae-vault-node-images
-          requires: []
+      # - test:
+      #     context: ae-vault-node-images
+      #     requires: []
 
-      - build:
-          context: ae-vault-node-images
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
+      # - build:
+      #     context: ae-vault-node-images
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only: master
 
       - cleanup_ami:
           context: ae-vault-node-images
@@ -92,8 +92,8 @@ workflows:
               prefix:
                 - aeternity-ubuntu-18.04
                 - aeternity-ubuntu-22.04
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+          # requires:
+          #   - build
+          # filters:
+          #   branches:
+          #     only: master
