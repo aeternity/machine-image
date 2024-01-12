@@ -27,7 +27,7 @@ def get_stale_amis(ec2_client, aeternity_image_names):
     # Add wildcard to the list (or string) of image names.
     if isinstance(aeternity_image_names, list):
         image_names = [ "{0}*".format(image) for image in aeternity_image_names ]
-    elif isinstance(aeternity_image_names, basestring):
+    elif isinstance(aeternity_image_names, str):
         image_names = [ aeternity_image_names + "*" ]
     else:
         return []
