@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import boto3
 from botocore.exceptions import ClientError
 
@@ -10,11 +11,6 @@ REGIONS = [
     "eu-central-1",
     "eu-west-2",
     "eu-north-1"
-]
-
-AETERNITY_IMAGE_NAMES = [
-    "aeternity-ubuntu-18.04",
-    "aeternity-ubuntu-22.04"
 ]
 
 KEEP_UNUSED_IMAGES = 1
@@ -31,7 +27,7 @@ def get_stale_amis(ec2_client, aeternity_image_names):
     # Add wildcard to the list (or string) of image names.
     if isinstance(aeternity_image_names, list):
         image_names = [ "{0}*".format(image) for image in aeternity_image_names ]
-    elif isinstance(aeternity_image_names, basestring):
+    elif isinstance(aeternity_image_names, str):
         image_names = [ aeternity_image_names + "*" ]
     else:
         return []
@@ -98,7 +94,7 @@ try:
     for region in REGIONS:
         print(("Working in region: %s" % ( region )))
         ec2_client = boto3.client('ec2',region_name=region)
-        deregister(ec2_client, get_stale_amis(ec2_client, AETERNITY_IMAGE_NAMES))
+        deregister(ec2_client, get_stale_amis(ec2_client, os.environ['AETERNITY_AMI_PREFIX']))
 
 except:
     print("Unexpected error:", sys.exc_info()[0])
