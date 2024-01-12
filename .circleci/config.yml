@@ -52,8 +52,20 @@ jobs:
           name: Build and publish images
           no_output_timeout: 2h
           command: envdir /secrets packer build packer/aeternity.json
+      - *fail_notification
+
+  cleanup_ami:
+    <<: *infrastructure_config
+    parameters:
+      prefix:
+        type: string
+    steps:
+      - checkout
+      - setup_secrets
       - run:
           name: Cleanup old AMIs
+          environment:
+            AETERNITY_AMI_PREFIX: << parameters.prefix >>
           command: envdir /secrets python packer/scripts/ami-cleanup.py
       - *fail_notification
 
@@ -69,6 +81,19 @@ workflows:
           context: ae-vault-node-images
           requires:
             - test
+          filters:
+            branches:
+              only: master
+
+      - cleanup_ami:
+          context: ae-vault-node-images
+          matrix:
+            parameters:
+              prefix:
+                - aeternity-ubuntu-18.04
+                - aeternity-ubuntu-22.04
+          requires:
+            - build
           filters:
             branches:
               only: master
