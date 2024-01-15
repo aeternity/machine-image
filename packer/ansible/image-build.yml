@@ -14,11 +14,25 @@
   vars:
     datadog_enabled: false
   tasks:
-    - name: "Setup bootstrap on reboot"
+    - name: "Setup bootstrap on reboot (legacy)"
       lineinfile:
         path: /etc/cloud/cloud.cfg
         regexp: '^ - scripts-user'
         line: ' - [scripts-user, always]'
+        backrefs: yes
+        backup: yes
+        # the original .cfg is missing #cloud-config header for some reason
+        # validate: 'cloud-init schema --config-file %s'
+
+    - name: "Setup bootstrap on reboot"
+      lineinfile:
+        path: /etc/cloud/cloud.cfg
+        regexp: '^  - scripts_user'
+        line: '  - [scripts_user, always]'
+        backrefs: yes
+        backup: yes
+        # the original .cfg is missing #cloud-config header for some reason
+        # validate: 'cloud-init schema --config-file %s'
 
     - name: "Stop and disable datadog services"
       service:
