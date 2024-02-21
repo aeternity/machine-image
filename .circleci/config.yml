@@ -3,7 +3,7 @@ version: 2.1
 references:
   infrastructure_config: &infrastructure_config
     docker:
-      - image: aeternity/infrastructure
+      - image: aeternity/infrastructure:v3.0.1
 
   fail_notification: &fail_notification
     run:
