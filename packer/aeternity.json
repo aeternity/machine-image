@@ -53,7 +53,8 @@
       "playbook_file": "{{ template_dir }}/ansible/image-build.yml",
       "extra_arguments": [
         "-e ansible_python_interpreter='/usr/bin/env python3'"
-      ]
+      ],
+      "use_proxy": false
     }
   ]
 }
