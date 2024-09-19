@@ -26,7 +26,7 @@
               "throughput": 125,
               "iops": 3000
       }],
-      "iam_instance_profile": "epoch-packer-build",
+      "iam_instance_profile": "node-packer-build",
       "skip_profile_validation": true,
       "instance_type": "c7i.large",
       "ssh_username": "ubuntu",
